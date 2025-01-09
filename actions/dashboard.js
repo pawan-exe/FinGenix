@@ -1,13 +1,17 @@
 "use server";
 
+import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 const serializeTransaction = (obj) => {
   const serialized = { ...obj };
   if (obj.balance) {
     serialized.balance = obj.balance.toNumber();
   }
-
+  if (obj.amount) {
+    serialized.amount = obj.amount.toNumber();
+  }
   return serialized;
 };
 
@@ -20,9 +24,7 @@ export async function createAccount(data) {
 
     // check  if user is present in database or not
     const user = await db.user.findUnique({
-      where: {
-        clerckUserId: userId,
-      },
+      where: { clerkUserId: userId },
     });
 
     if (!user) {
@@ -40,6 +42,8 @@ export async function createAccount(data) {
       },
     });
 
+    // If it's the first account, make it default regardless of user input
+    // If not, use the user's preference
     const shouldBeDefault =
       existingAccounts.length === 0 ? true : data.isDefault;
 
@@ -47,7 +51,7 @@ export async function createAccount(data) {
     if (shouldBeDefault) {
       await db.account.updateMany({
         where: { userId: user.id, isDefault: true },
-        data: { idDefault: false },
+        data: { isDefault: false },
       });
     }
 
@@ -56,7 +60,7 @@ export async function createAccount(data) {
         ...data,
         balance: balanceFloat,
         userId: user.id,
-        isDefault: shouldBeDefault,
+        isDefault: shouldBeDefault, // Override the isDefault based on our logic
       },
     });
 
@@ -68,4 +72,55 @@ export async function createAccount(data) {
   } catch (error) {
     throw new Error(error.message);
   }
+}
+
+export async function getUserAccounts() {
+  // check if user is loggedin or not
+  const { userId } = await auth();
+
+  if (!userId) throw new Error("Unauthorized");
+
+  // check  if user is present in database or not
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const accounts = await db.account.findMany({
+    where: { userId: user.id },
+    orderBy: { createdAt: "desc" },
+    include: {
+      _count: {
+        select: {
+          transactions: true,
+        },
+      },
+    },
+  });
+
+  const serializedAccount = accounts.map(serializeTransaction);
+
+  return serializedAccount;
+}
+
+export async function getDashboardData() {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  // get all user transactions
+  const transactions = await db.transaction.findMany({
+    where: { userId: user.id },
+    orderBy: { date: "desc" },
+  });
+
+  return transactions.map(serializeTransaction);
 }
