@@ -11,15 +11,37 @@ const Header = async () => {
   return (
     <div className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b">
       <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/">
+        <Link href="/" className="mr-3">
           <Image
-            src={"/logo.png"}
+            src={"/logo1.png"}
             alt="fingenix logo"
             height={60}
             width={200}
-            className="h-12 w-auto object-contain"
+            className="h-12 w-auto object-contain hidden sm:block"
+          />
+          <Image
+            src={"/logo2.png"}
+            alt="fingenix logo"
+            height={60}
+            width={200}
+            className="h-12 w-auto object-contain sm:hidden"
           />
         </Link>
+
+        {/* Navigation Links - Different for signed in/out users */}
+        <div className="hidden md:flex items-center space-x-8">
+          <SignedOut>
+            <a href="#features" className="text-gray-600 hover:text-blue-600">
+              Features
+            </a>
+            <a
+              href="#testimonials"
+              className="text-gray-600 hover:text-blue-600"
+            >
+              Testimonials
+            </a>
+          </SignedOut>
+        </div>
 
         <div className="flex items-center space-x-4">
           <SignedIn>
