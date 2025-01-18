@@ -50,6 +50,8 @@ export async function getCurrentBudget(accountId) {
       },
     });
 
+    // console.log(expenses._sum.amount);
+
     return {
       budget: budget ? { ...budget, amount: budget.amount.toNumber() } : null,
       currentExpenses: expenses._sum.amount
