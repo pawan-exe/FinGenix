@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#  FinGenix
 
-## Getting Started
+Welcome to FinGenix - Manage Your Finances with Intelligence.
+### Live Website: [FinGenix](https://fin-genix.vercel.app/)
 
-First, run the development server:
+## 🖥️ Tech Stack
+- **Next JS**
+- **Prisma**
+- **Supabse**
+- **Gemini AI**
+- **Tailwind CSS**
+- **Shadcn UI**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Key Features
+- **Scalable and secure AI-driven finance platform**
+   - Built using Next.js, Prisma, and Supabase
+   - Advanced financial management capabilities
+- **Robust security features**
+   - ArcJet implementation for enhanced protection
+   - Bot protections and rate limiting to prevent server overload and attacks
+- **Automated financial processes with Inngest**
+   - Monthly AI-powered wealth insight reports
+   - Budget alerts for proactive financial planning
+   - Recurring transaction recalculations for improved accuracy
+- **Dynamic user insights with visualizations**
+   - Pie charts for expense breakdowns
+   - Bar charts for transaction overviews
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📷 Screenshot
+![FinGenix Screenshot](https://i.imgur.com/nZMTGEA.jpg)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
